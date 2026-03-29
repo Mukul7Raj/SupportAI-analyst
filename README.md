@@ -3,6 +3,8 @@
 [![Vercel](https://img.shields.io/badge/Deploy-Vercel-black?logo=vercel)](https://support-ai-analyst.vercel.app/)
 [![Gemini](https://img.shields.io/badge/AI-Gemini%202.5%20Flash-blue?logo=google-gemini)](https://aistudio.google.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+DEMO LINK:
+https://drive.google.com/file/d/1YfqBmm4wOG80g1w7qrVSqnlTWHQGTKzs/view?usp=vids_web
 
 > **An intelligent, real-time customer support triage dashboard that automates prioritization and sentiment analysis using Gemini 2.5 Flash.**
 
