@@ -70,7 +70,8 @@ graph LR
 
 ### 1. Prerequisites
 - Node.js (v18 or higher)
-- A Google AI Studio API Key ([Get one here](https://aistudio.google.com/app/apikey))
+- A **FREE TIER** Google AI Studio API Key ([Get one here for free](https://aistudio.google.com/app/apikey))
+  - *Note: Ensure you use "Google AI Studio" rather than "Vertex AI" to avoid 404/permission issues.*
 
 ### 2. Installation
 ```bash

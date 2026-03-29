@@ -38,7 +38,7 @@ export async function analyzeTicketText(ticketText) {
   }
 
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+    const model = await getStableModel(genAI);
 
     // Fetch learning loop history
     let feedbackContext = "";
@@ -70,18 +70,21 @@ export async function analyzeTicketText(ticketText) {
     const jsonStr = text.replace(/```json/g, '').replace(/```/g, '').trim();
     return JSON.parse(jsonStr);
   } catch (error) {
-    console.error("Gemini API Error:", error);
-    // Return graceful fallback on error
-    return FALLBACK_MOCK_RESPONSE;
+    console.error("❌ Gemini API Analysis Error:", error);
+    // Informative fallback
+    return {
+        ...FALLBACK_MOCK_RESPONSE,
+        reasoning: `⚠️ API Error: ${error.message}. (Using Mock Data)`
+    };
   }
 }
 
 export async function draftReplyWithGemini(ticketText, priority, sentiment) {
   if (!genAI) {
-    return "Mock Response: We have received your ticket and are looking into it immediately.";
+    return "Mock Response: We have received your ticket and are looking into it immediately. (API Key Missing)";
   }
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+    const model = await getStableModel(genAI);
     const prompt = `You are a professional customer support agent. 
 Draft a polite, empathetic, and concise reply to the following customer ticket.
 The ticket priority is ${priority} and the customer's sentiment is ${sentiment}.
@@ -92,7 +95,7 @@ Write only the email reply body.`;
     const result = await model.generateContent(prompt);
     return result.response.text();
   } catch (error) {
-    console.error("Draft Reply Error:", error);
-    return "Error generating draft reply. Please try again.";
+    console.error("❌ Gemini Draft Reply Error:", error);
+    return `⚠️ Error generating draft: ${error.message}. Ensure you are using a FREE TIER key from Google AI Studio.`;
   }
 }
