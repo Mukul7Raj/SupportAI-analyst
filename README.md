@@ -1,41 +1,101 @@
 # SupportAI Analyst 🚀
-*An intelligent, real-time customer support triage dashboard.*
+
+[![Vercel](https://img.shields.io/badge/Deploy-Vercel-black?logo=vercel)](https://support-ai-analyst.vercel.app/)
+[![Gemini](https://img.shields.io/badge/AI-Gemini%202.5%20Flash-blue?logo=google-gemini)](https://aistudio.google.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+> **An intelligent, real-time customer support triage dashboard that automates prioritization and sentiment analysis using Gemini 2.5 Flash.**
+
+![SupportAI Dashboard Demo](public/demo.png)
+
+---
 
 ## 💡 The Problem
-Customer support teams are drowning in a sea of generic tickets. When hundreds of emails flood in daily, it is nearly impossible for human agents to manually sort the noise (feature requests, general questions) from the critical emergencies (checkout flows breaking, angry customers canceling subscriptions). **Every minute a critical ticket sits unread, the business loses money and trust.**
+Customer support teams are drowning in a sea of generic tickets. Manual triage is slow, leading to:
+- **Critical issues** (billing errors, high-churn signals) sitting unread for hours.
+- **Agent burnout** due to repetitive sorting tasks.
+- **Customer frustration** from slow response times.
 
 ## 🎯 The Solution
-**SupportAI Analyst** is a real-time, glassmorphic dashboard that acts as an intelligent first-responder. The moment a ticket is submitted, Google's Gemini AI reads it, understands the context, detects the customer's sentiment, and automatically assigns a priority level. It pushes high-priority issues to the top of the queue and can even instantly generate a drafted, empathetic reply for the human agent to review and send.
+**SupportAI Analyst** is a high-performance "first-responder" dashboard. It leverages Google's **Gemini 2.5 Flash** to:
+1.  **Instant Triage**: Categorize and prioritize tickets the millisecond they arrive.
+2.  **Explainable AI**: Not just a "High" tag—it explains *why* the ticket was prioritized.
+3.  **Human-in-the-Loop**: Learn from agent corrections in real-time using a local feedback loop.
+4.  **Auto-Drafting**: Generate empathetic responses instantly for agent review.
 
-## 📈 Projected Business Impact
-- **⏱️ Time Saved:** Reduces triage time by ~70%
-- **🚀 Scalability:** Handles 1,000+ tickets/min simultaneously
-- **⚡ Resolution Speed:** Cuts response delay from 2 hours → 2 minutes
-
-## ⚙️ The Tech Stack
-- **Frontend Framework:** React 18 powered by Vite for lightning-fast HMR and building.
-- **AI Integration:** Google Generative AI SDK (`@google/generative-ai`) natively running **`gemini-2.5-flash`** for instant reasoning.
-- **Backend / API Layer (*Architectural Foundation*):** Node.js & Express (Simulated) structured for stateless deployment, built to handle massive incoming webhook streams.
-- **Database:** PostgreSQL Schema approach (Simulated) designed to index all historical tickets and AI assignments for overarching analytics.
-- **Styling:** Custom Vanilla CSS featuring modern, premium aesthetics (Glassmorphism, dark mode, glowing neon status indicators).
-
-## 🛡️ Enterprise-Ready Architecture
-Even for this hackathon demo, we built with a production mindset:
-- **Authentication & Security:** A built-in JWT verification middleware layer (`server/middleware/auth.js`) ensures only authenticated Customer Support Agents have access to read critical customer emails or trigger Gemini operations. We also planned for PII (Personally Identifiable Information) scrubbing prior to AI ingestion.
-- **Massive Scaling:** The logic has been decoupled. The frontend client acts independently, while the API routing (`server/index.js`) is designed conceptually to be deployed as stateless Edge Functions (e.g. AWS Lambda / Vercel Edge). This guarantees the platform won't crash even if 10,000 angry customers submit tickets during an outage.
-- **Database Indexing:** Our data schema logs the original ticket, the AI's determined sentiment, AND any agent corrections (`server/db.js`), allowing the company to query broad product sentiment metrics over time.
+---
 
 ## ✨ Key "Wow" Features
-1. **Explainable AI (Reasoning):** We don’t just show a "High Priority" tag. The UI explicitly tells the agent *why* Gemini gave it that score (e.g., *"• Keywords: 'failed', 'charged twice' detected"*).
-2. **Human-in-the-Loop (RLHF) Loop:** Agents can correct AI priority assignments (e.g., from Medium to High). These corrections are persisted and **dynamically injected into future prompts**, allowing the AI to "learn" business-specific policies in real-time.
-3. **Instant "Magic" Drafts:** Clicking "Draft Reply" on any card instantly opens the modal and **auto-triggers Gemini** to draft a response. No extra clicks required.
-4. **Measurable Trust (Confidence Signals):** Every analysis includes a high-accuracy confidence score (e.g., *94% Confidence*), making the system's intelligence objective and measurable.
-5. **Interactive Demo Mode:** Integrated **Example Chips** (💳 Payment, 🛠️ Technical, 🔐 Access) allow judges to test multiple complex scenarios with a single click.
-6. **Premium 60fps UX:** Designed with advanced **Slide-From-Bottom, Scale, and Blur** entrance animations that scream "Production-Ready."
 
-## 🏆 What the Judges Need to Know
-*Use these points verbally during your pitch / demo:*
+### 🧠 1. Explainable Reasoning
+Every ticket analyzed by Gemini includes a detailed "AI Detailed Insight" section. It breaks down the logic, such as identified keywords and business impact risks.
 
-- **Speed:** By leveraging `gemini-2.5-flash` natively in the client, we achieve near-instantaneous ticket routing without the overhead of a heavy backend server. 
-- **Scalability & Cost:** This approach means Customer Support teams can scale infinitely. The AI handles the triage routing instantly, allowing human agents to spend 100% of their time *solving* problems instead of *sorting* them.
-- **Real-World Impact:** This prevents churn. By catching the angry, high-priority "billing error" tickets immediately and drafting an empathetic response, teams can turn a negative customer experience into a positive one before the customer decides to cancel their account.
+### 🔄 2. Real-Time Feedback Loop (RLHF)
+If an agent corrections an AI-assigned priority, the system **remembers** that correction. This feedback is dynamically injected into future prompts, allowing the AI to "learn" business-specific policies without retraining.
+
+### ⚡ 3. Gemini 2.5 Flash Native Integration
+By leveraging the Flash model, we achieve sub-2-second analysis speeds while maintaining high-quality reasoning, making real-time triage truly viable at scale.
+
+### 💅 4. Premium Glassmorphic UI
+A sleek, modern interface with 60fps animations, glowing status indicators, and a dark-mode-first aesthetic that screams "Enterprise Grade."
+
+---
+
+## 🏗️ Architecture
+
+```mermaid
+graph LR
+    A[Customer Ticket] --> B[Vite Client]
+    B --> C{Gemini 2.5 Flash}
+    C --> D[Priority & Sentiment Analysis]
+    C --> E[Drafted Reply]
+    D --> F[Live Dashboard]
+    F --> G[Agent Feedback Loop]
+    G -- "Stored in LocalStorage" --> C
+```
+
+---
+
+## 🛠️ Tech Stack
+
+- **Frontend**: React 18, Vite (for lightning-fast HMR)
+- **AI Engine**: Google Generative AI SDK (Gemini 2.5 Flash)
+- **Styling**: Modern Vanilla CSS (Glassmorphism, CSS Variables)
+- **Icons**: Lucide React
+- **Deployment**: Optimized for Vercel
+
+---
+
+## 🚀 Quick Start
+
+### 1. Prerequisites
+- Node.js (v18 or higher)
+- A Google AI Studio API Key ([Get one here](https://aistudio.google.com/app/apikey))
+
+### 2. Installation
+```bash
+git clone https://github.com/Mukul7Raj/SupportAI-analyst.git
+cd SupportAI-analyst
+npm install
+```
+
+### 3. Setup Environment Variables
+Create a `.env` file in the root directory:
+```env
+VITE_GEMINI_API_KEY=your_gemini_api_key_here
+```
+
+### 4. Run Locally
+```bash
+npm run dev
+```
+
+---
+
+## 👥 Meet the Team
+Built with ❤️ during the **SupportAI Hackathon 2024**.
+
+---
+
+## 📜 License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
